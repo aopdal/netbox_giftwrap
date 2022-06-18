@@ -729,7 +729,7 @@
 #### Type: {{ result['link_peer_type'] }}
 ### MAC Address: {{ result['mac_address'] }}
 ### Mark Connected: {{ result['mark_connected'] }}
-### Mode: {{ result['mode'] }}
+### Mode: {{ result['mode']['label'] }}
 ### MTU: {{ result['mtu'] }}
 ### RF
 #### Channel
@@ -739,8 +739,8 @@
 #### Role: {{ result['rf_role'] }}
 ### Speed: {{ result['speed'] }}
 ### VLANs
-#### Tagged: {{ result['tagged_vlans'] }}
-#### Untagged: {{ result['untagged_vlan'] }}
+#### Tagged: {%- if result['mode']['value'] == 'tagged-all' %}All{%- elif result['tagged_vlans'] is defined %}{% for taggedvids in result['tagged_vlans'] %} {{ taggedvids['vid']}} / {{taggedvids['display'] }}{% endfor %}{%- else %}{{ result['tagged_vlans'] }}{%- endif %}
+#### Untagged: {%- if result['untagged_vlan']['vid'] is defined %}{{ result['untagged_vlan']['vid']}} / {{result['untagged_vlan']['display'] }}{%- else %}{{ result['untagged_vlan'] }}{%- endif %}
 #### Wireless: {{ result['wireless_lans'] }}
 ### TX Power: {{ result['tx_power'] }}
 ### VRF: {{ result['vrf'] }}

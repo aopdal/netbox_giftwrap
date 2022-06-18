@@ -1505,15 +1505,29 @@
     <td>{{ result['link_peer_type'] }}</td>
     <td>{{ result['mac_address'] }}</td>
     <td>{{ result['mark_connected'] }}</td>
-    <td>{{ result['mode'] }}</td>
+    <td>{{ result['mode']['label'] }}</td>
     <td>{{ result['mtu'] }}</td>
     <td>{{ result['rf_channel'] }}</td>
     <td>{{ result['rf_channel_frequency'] }}</td>
     <td>{{ result['rf_channel_width'] }}</td>
     <td>{{ result['rf_role'] }}</td>
     <td>{{ result['speed'] }}</td>
+{%- if result['mode']['value'] == 'tagged-all' %}
+    <td>All</td>
+{%- elif result['tagged_vlans'] is defined %}
+    <td>
+  {% for taggedvids in result['tagged_vlans'] %}
+    {{ taggedvids['vid']}} / {{taggedvids['display'] }}
+  {% endfor %}
+    </td>
+{%- else %}
     <td>{{ result['tagged_vlans'] }}</td>
+{%- endif %}
+{%- if result['untagged_vlan']['vid'] is defined %}
+    <td>{{ result['untagged_vlan']['vid']}} / {{result['untagged_vlan']['display'] }}</td>
+{%- else %}
     <td>{{ result['untagged_vlan'] }}</td>
+{%- endif %}
     <td>{{ result['tx_power'] }}</td>
     <td>{{ result['vrf'] }}</td>
     <td>{{ result['wireless_lans'] }}</td>
